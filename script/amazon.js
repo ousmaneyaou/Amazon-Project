@@ -121,8 +121,15 @@ document.querySelectorAll('.js-add-to-card')
                 cart .push({
                     productId: productId,
                     quantity: 1
-                })
+                });
             }
-            console.log(cart)
-        })
-    })
+
+            // calculons la quantite total
+            let cartQantity = 0
+            cart.forEach((item) =>{
+                cartQantity += item.quantity
+            });
+            //affichage au nivo du DOM (dans le panier)
+            document.querySelector('.js-cart-quantity').innerHTML = cartQantity
+        });
+    });
