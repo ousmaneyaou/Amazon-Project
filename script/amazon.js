@@ -36,7 +36,7 @@
 //     priceCents: 1899 //10.99
 // }];
 
-
+import { cart } from "../data/cart.js";
 
 let productsHTML = '';
 // // generation du html
@@ -99,37 +99,40 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML
 
 
 //le rendre interactif
+function addToCart(productId){
+    //condition d'incrementation de la quantité
+    let machinItem;
 
+    cart.forEach((cartItem) =>{
+        if(productId === cartItem.productId){
+            machinItem = cartItem;
+        }
+    });
+    if(machinItem){
+        machinItem.quantity += 1
+    }else{
+        cart .push({
+            productId: productId,
+            quantity: 1
+        });
+    }   
+}
 
+function updateCartQuntity(){
+    // calculons la quantite total
+    let cartQantity = 0
+    cart.forEach((cartItem) =>{
+        cartQantity += cartItem.quantity
+    });
+    //affichage au nivo du DOM (dans le panier)
+    document.querySelector('.js-cart-quantity').innerHTML = cartQantity
+}
 //ajout du non du produits
 document.querySelectorAll('.js-add-to-card')
     .forEach((button) => {
         button.addEventListener('click', () => {
             const productId = button.dataset.productId;
-
-        //condition d'incrementation de la quantité
-            let machinItem;
-
-            cart.forEach((item) =>{
-                if(productId === item.productId){
-                    machinItem = item;
-                }
-            });
-            if(machinItem){
-                machinItem.quantity += 1
-            }else{
-                cart .push({
-                    productId: productId,
-                    quantity: 1
-                });
-            }
-
-            // calculons la quantite total
-            let cartQantity = 0
-            cart.forEach((item) =>{
-                cartQantity += item.quantity
-            });
-            //affichage au nivo du DOM (dans le panier)
-            document.querySelector('.js-cart-quantity').innerHTML = cartQantity
+            addToCart(productId)
+            updateCartQuntity()
         });
     });
