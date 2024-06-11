@@ -36,103 +36,84 @@
 //     priceCents: 1899 //10.99
 // }];
 
-import { cart } from "../data/cart.js";
+import { cart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
 let productsHTML = '';
-// // generation du html
 
-productList.forEach((product) => {
+// Génération du HTML
+products.forEach((product) => {
     productsHTML += `
-            <div class="product-container">
+        <div class="product-container">
             <div class="product-image-container">
-            <img class="product-image"
-                src="${product.image}">
+                <img class="product-image" src="${product.image}">
             </div>
-
-            <div class="product-name limit-text-to-2-lines">
-            ${product.name}
-            </div>
-
+            <div class="product-name limit-text-to-2-lines">${product.name}</div>
             <div class="product-rating-container">
-            <img class="product-rating-stars"
-                src="images/ratings/rating-${product.rating.stars * 10}.png">
-            <div class="product-rating-count link-primary">
-            ${product.rating.count}
+                <img class="product-rating-stars" src="images/ratings/rating-${product.rating.stars * 10}.png">
+                <div class="product-rating-count link-primary">${product.rating.count}</div>
             </div>
-            </div>
-
-            <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
-            </div>
-
+            <div class="product-price">$${(product.priceCents / 100).toFixed(2)}</div>
             <div class="product-quantity-container">
-            <select>
-                <option selected value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
+                <select>
+                    <option selected value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
             </div>
-
             <div class="product-spacer"></div>
-
             <div class="added-to-cart">
-            <img src="images/icons/checkmark.png">
-            Added
+                <img src="images/icons/checkmark.png"> Added
             </div>
-
-            <button class="add-to-cart-button button-primary  js-add-to-card"
-            data-product-id="${product.id}">
-            Add to Cart
-            </button>
+            <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">Add to Cart</button>
         </div>
-    `
-})
+    `;
+});
 
-document.querySelector('.js-products-grid').innerHTML = productsHTML
+document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+// Fonction pour ajouter un produit au panier
+function addToCart(productId) {
+    let foundItem;
 
-//le rendre interactif
-function addToCart(productId){
-    //condition d'incrementation de la quantité
-    let machinItem;
-
-    cart.forEach((cartItem) =>{
-        if(productId === cartItem.productId){
-            machinItem = cartItem;
+    cart.forEach((cartItem) => {
+        if (productId === cartItem.productId) {
+            foundItem = cartItem;
         }
     });
-    if(machinItem){
-        machinItem.quantity += 1
-    }else{
-        cart .push({
+
+    if (foundItem) {
+        foundItem.quantity += 1;
+    } else {
+        cart.push({
             productId: productId,
             quantity: 1
         });
-    }   
+    }
 }
 
-function updateCartQuntity(){
-    // calculons la quantite total
-    let cartQantity = 0
-    cart.forEach((cartItem) =>{
-        cartQantity += cartItem.quantity
+// Fonction pour mettre à jour la quantité du panier
+function updateCartQuantity() {
+    let cartQuantity = 0;
+    cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
     });
-    //affichage au nivo du DOM (dans le panier)
-    document.querySelector('.js-cart-quantity').innerHTML = cartQantity
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
-//ajout du non du produits
-document.querySelectorAll('.js-add-to-card')
+
+// Ajout d'un écouteur d'événements sur les boutons "Add to Cart" // ou //ajout du non du produits
+document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
         button.addEventListener('click', () => {
             const productId = button.dataset.productId;
-            addToCart(productId)
-            updateCartQuntity()
+            addToCart(productId);
+            updateCartQuantity();
         });
     });
