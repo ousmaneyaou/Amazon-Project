@@ -39,7 +39,9 @@
 import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 
-let productsHTML = '';
+
+// Initialisation de la variable pour contenir le HTML généré
+let productsHTML = ''; 
 
 // Génération du HTML
 products.forEach((product) => {
