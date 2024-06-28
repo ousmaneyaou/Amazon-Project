@@ -1,4 +1,4 @@
-export const cart = [{
+export let cart = [{
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
     quantity: 2,
 },
@@ -26,4 +26,17 @@ export function addToCart(productId) {
             quantity: 1
         });
     }
+}
+
+// Fonction pour supprimer un produit au panier
+export function removeFromCart(productId) {
+    const newCart = [];  //etap1 creation d'un nouveau tableau
+
+    cart.forEach((cartItem) => {  //etap2 onparcour le tableau
+        if (cartItem.productId !== productId) {
+            newCart.push(cartItem);
+        }
+    });
+
+    cart = newCart;
 }
