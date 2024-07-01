@@ -9,7 +9,9 @@ const today = dayjs();
 const deliveryDate = today.add(7, 'days');
 const formattedDeliveryDate = deliveryDate.format('dddd, MMMM D');
 
-// Initialisation de la variable pour contenir le HTML généré
+
+function renderOrderSummary(){
+    // Initialisation de la variable pour contenir le HTML généré
 let cartSummaryHTML = '';
 
 // Parcours des articles dans le panier
@@ -157,5 +159,9 @@ document.querySelectorAll('.js-delivery-option')
     element.addEventListener('click', () => {
         const { productId, deliveryOptionId} = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
+        renderOrderSummary();
     });
 });
+}
+
+renderOrderSummary();
