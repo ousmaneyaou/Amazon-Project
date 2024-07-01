@@ -82,9 +82,8 @@ export function updateFromCart(productId) {
     saveToStorage();
 }
 
-
-//la livraison
-export function updateDeliveryOption(productId, deliveryOptionId){
+// Mise à jour de l'option de livraison
+export function updateDeliveryOption(productId, deliveryOptionId) {
     let foundItem;
 
     cart.forEach((cartItem) => {
@@ -93,7 +92,10 @@ export function updateDeliveryOption(productId, deliveryOptionId){
         }
     });
 
-    matchingItem.deliveryOptionId = deliveryOptionId
-
-    saveToStorage();
+    if (foundItem) {
+        foundItem.deliveryOptionId = deliveryOptionId;
+        saveToStorage();
+    } else {
+        console.error(`Product with id ${productId} not found in cart`);
+    }
 }
