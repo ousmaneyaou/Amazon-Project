@@ -1,8 +1,9 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { products } from '../../data/products.js';
+import { products, getProduct } from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { formatCurrency } from '../Utils/money.js';
+
 
 // Utilisation de dayjs
 const today = dayjs();
@@ -18,18 +19,16 @@ export function renderOrderSummary() {
         const productId = cartItem.productId;
 
         // Trouver le produit correspondant
-        let matchingProduct = products.find(product => product.id === productId);
+        let matchingProduct = getProduct(productId);
 
         // Vérifier si le produit correspondant est trouvé
         if (matchingProduct) {
             const deliveryOptionId = cartItem.deliveryOptionId || '1'; // Utiliser une valeur par défaut si non définie
-            let deliveryOption;
 
-            deliveryOptions.forEach((option) => {
-                if (option.id === deliveryOptionId) {
-                    deliveryOption = option;
-                }
-            });
+
+            const deliveryOption = getDeliveryOption(deliveryOptionId);
+
+            
 
             // Vérifier si l'option de livraison est trouvée avant d'accéder à deliveryDate
             if (deliveryOption) {
