@@ -4,6 +4,7 @@ import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../Utils/money.js";
 
 
+
 export function renderPayementSummary(){
     //les trois etapes comme dab
     // 1- save the date
@@ -20,9 +21,10 @@ export function renderPayementSummary(){
     
     const totalBeforeTaxCents = productpriceCents * ShippingPriceCents;
     const taxCents = totalBeforeTaxCents * 0.19;
-    const totalCents = taxCents + totalBeforeTaxCents;
-    // 2- Generate the html
+    const totalCents = productpriceCents + taxCents;
 
+    
+    // 2- Generate the html
 
     const payementSummaryHTML = `
 
@@ -60,6 +62,6 @@ export function renderPayementSummary(){
           </button>
     `;
     document.querySelector('.js-payment-summary')
-    .innerHTML.payementSummaryHTML;
+    .innerHTML = payementSummaryHTML;
     // 3- make it interactive
 }
