@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
+import { cart, removeFromCart, updateDeliveryOption, updateCartQuantity } from '../../data/cart.js';
 import { products, getProduct } from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
@@ -40,7 +40,7 @@ export function renderOrderSummary() {
                 cartSummaryHTML += `
                     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
                         <div class="delivery-date">
-                            Delivery date: ${dateString}
+                        Date de livraison: ${dateString}
                         </div>
 
                         <div class="cart-item-details-grid">
@@ -57,7 +57,7 @@ export function renderOrderSummary() {
                                     <span>
                                         Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                                     </span>
-                                    <span class="update-quantity-link link-primary js-update-link">
+                                    <span class="update-quantity-link link-primary js-update-link" data-product-id="${matchingProduct.id}">
                                         Update
                                     </span>
                                     <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
@@ -74,7 +74,7 @@ export function renderOrderSummary() {
 
                             <div class="delivery-options">
                                 <div class="delivery-options-title">
-                                    Choose a delivery option:
+                                Choisir une option de livraison:
                                 </div>
                                 
                                 ${deliveryOptionHTML(matchingProduct, cartItem)}
@@ -147,11 +147,17 @@ export function renderOrderSummary() {
     // Pour la mise à jour
     document.querySelectorAll('.js-update-link').forEach((link) => {
         link.addEventListener('click', () => {
-            // Logique de mise à jour ici
-            console.log('Update clicked');
+            const productId = link.dataset.productId;
+            const quantityLabel = document.querySelector(`.js-cart-item-container-${productId} .quantity-label`);
+            const currentQuantity = parseInt(quantityLabel.textContent, 10);
+            const newQuantity = prompt("Enter new quantity:", currentQuantity);
+            if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
+                updateCartQuantity(productId, parseInt(newQuantity, 10));
+                renderOrderSummary();
+                renderPayementSummary();
+            }
         });
     });
-
     // Livraison
     document.querySelectorAll('.js-delivery-option')
         .forEach((element) => {

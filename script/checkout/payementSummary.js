@@ -10,16 +10,21 @@ export function renderPayementSummary(){
     // 1- save the date
     let productpriceCents = 0;
     let ShippingPriceCents = 0;
+    let totalItems = 0; // Nouveau : pour stocker le nombre total d'articles
 
+    // Parcourir les articles dans le panier
     cart.forEach((cartItem) => {
         const product = getProduct(cartItem.productId)
         productpriceCents += product.priceCents * cartItem.quantity
+        totalItems += cartItem.quantity; // Nouveau : additionner les quantités des articles
+
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
         ShippingPriceCents += deliveryOption.priceCents
     });
     
-    const totalBeforeTaxCents = productpriceCents * ShippingPriceCents;
+    // Calcul des totaux
+    const totalBeforeTaxCents = productpriceCents + ShippingPriceCents;
     const taxCents = totalBeforeTaxCents * 0.19;
     const totalCents = productpriceCents + taxCents;
 
@@ -29,39 +34,47 @@ export function renderPayementSummary(){
     const payementSummaryHTML = `
 
     <div class="payment-summary-title">
-            Order Summary
+        Résumé de la commande
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${totalItems}):</div>
             <div class="payment-summary-money">$${formatCurrency(productpriceCents)}</div>
           </div>
 
           <div class="payment-summary-row">
-            <div>Shipping &amp; handling:</div>
+            <div>Frais d'expédition:</div>
             <div class="payment-summary-money">$${formatCurrency(ShippingPriceCents)}</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
-            <div>Total before tax:</div>
+            <div>Total avant taxes:</div>
             <div class="payment-summary-money">$${formatCurrency(totalBeforeTaxCents)}</div>
           </div>
 
           <div class="payment-summary-row">
-            <div>Estimated tax (19%):</div>
+            <div>Taxe estimée (19%):</div>
             <div class="payment-summary-money">$${formatCurrency(taxCents)}</div>
           </div>
 
           <div class="payment-summary-row total-row">
-            <div>Order total:</div>
+            <div>Total de la commande :</div>
             <div class="payment-summary-money">$${formatCurrency(totalCents)}</div>
           </div>
 
-          <button class="place-order-button button-primary">
-            Place your order
-          </button>
+          <button class="place-order-button button-primary" id="place-order-button">
+            Passez votre commande
+        </button>
+      
     `;
+   
     document.querySelector('.js-payment-summary')
     .innerHTML = payementSummaryHTML;
     // 3- make it interactive
+
+    // Redirection vers payement.html sans rafraîchissement de la page
+    document.getElementById('place-order-button').addEventListener('click', () => {
+        window.location.href = 'payement.html';
+    });
+    
 }

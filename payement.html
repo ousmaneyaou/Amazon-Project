@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Description du Mode de Paiement en Ligne</title>
+<link rel="stylesheet" href="./styles/pages/payement.css">
+</head>
+<body>
+  <header>
+    <h1>Lemplir le formulaire de paiement en ligne</h1>
+      <a href="checkout.html">
+        <img class="amazon-logo" src="images/amazon-logo.png">
+      </a>
+  </header>
+  
+  <main>
+    <div class="card-container">
+      <h2>Formulaire de création de carte</h2>
+      <form class="card-form" action="https://www.paiementenligne.fr/create-card" method="POST">
+        <div class="form-group">
+          <label for="fullname">Nom complet</label>
+          <input type="text" id="fullname" name="fullname" required>
+        </div>
+        <div class="form-group">
+          <label for="cardtype">Type de carte</label>
+          <select id="cardtype" name="cardtype" required>
+            <option value="visa">Visa</option>
+            <option value="mastercard">MasterCard</option>
+            <option value="amex">American Express</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="limit">Limite de dépenses mensuelle (€)</label>
+          <input type="number" id="limit" name="limit" min="100" max="10000" required>
+        </div>
+        <div class="form-group">
+          <label for="currency">Devise principale</label>
+          <select id="currency" name="currency" required>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="USD">Dollar américain (USD)</option>
+            <option value="GBP">Livre sterling (GBP)</option>
+            <option value="CFA">XOF</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-btn">Créer ma carte</button>
+      </form>
+    </div>
+
+    <div class="card-preview">
+      <h3>Aperçu de votre carte</h3>
+      <div class="card-number">**** **** **** 1234</div>
+      <div class="card-details">
+        <span id="preview-name">VOTRE NOM</span>
+        <span>EXPIRE 12/25</span>
+      </div>
+    </div>
+
+  <script>
+    document.getElementById('fullname').addEventListener('input', function(e) {
+      document.getElementById('preview-name').textContent = e.target.value.toUpperCase() || 'VOTRE NOM';
+    });
+  </script>
+</body>
+</html>

@@ -49,7 +49,7 @@ export function addToCart(productId) {
             deliveryOptionId: '1'
         });
     }
-    saveToStorage();
+    saveToStorage(); // Sauvegarde après ajout
 }
 
 // Fonction pour supprimer un produit du panier
@@ -64,22 +64,17 @@ export function removeFromCart(productId) {
 
     cart = newCart;
 
-    saveToStorage();
+    saveToStorage(); // Sauvegarde après suppression
 }
 
-// Fonction pour la mise à jour du produit au panier
-export function updateFromCart(productId) {
-    const newCart = [];  // étape 1 : création d'un nouveau tableau
-
-    cart.forEach((cartItem) => {  // étape 2 : on parcourt le tableau
-        if (cartItem.productId !== productId) {
-            newCart.push(cartItem);
+// Fonction pour mettre à jour la quantité d'un produit dans le panier
+export function updateCartQuantity(productId, newQuantity) {
+    cart.forEach((cartItem) => {
+        if (cartItem.productId === productId) {
+            cartItem.quantity = newQuantity; // Mise à jour de la quantité
         }
     });
-
-    cart = newCart;
-
-    saveToStorage();
+    saveToStorage(); // Sauvegarde après mise à jour de la quantité
 }
 
 // Mise à jour de l'option de livraison
@@ -94,7 +89,7 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 
     if (foundItem) {
         foundItem.deliveryOptionId = deliveryOptionId;
-        saveToStorage();
+        saveToStorage();  // Sauvegarde après mise à jour de l'option de livraison
     } else {
         console.error(`Product with id ${productId} not found in cart`);
     }

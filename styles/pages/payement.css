@@ -1,0 +1,87 @@
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+  .amazon-logo {
+    width: 70px;
+    left: 10px;
+    bottom: 90px;
+    position: absolute;
+}
+
+  header {
+    background-color: #0056b3;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    border-radius: 5px;
+    position: relative;
+  }
+  h1, h2 { margin-bottom: 0.5em; }
+  .card-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .card-form {
+    display: grid;
+    gap: 15px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input, select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .submit-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+  .card-preview {
+    background: linear-gradient(45deg, #0056b3, #00a8e8);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .card-number {
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  .card-details {
+    display: flex;
+    justify-content: space-between;
+  }
+  .security-info {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
